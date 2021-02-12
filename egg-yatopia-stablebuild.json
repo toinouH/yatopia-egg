@@ -1,0 +1,39 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v1",
+        "update_url": null
+    },
+    "exported_at": "2021-02-12T11:57:05+03:00",
+    "name": "Yatopia",
+    "author": "unknown@unknown.com",
+    "description": "Egg made by X_Shadow_#5962. The blazing fast Tuinity, papermc fork with better performance. Yatopia is made of Akarin, EMC, Lithium, Origami, Purpur, AirplaneLite, Hydrogen, Krypton",
+    "features": ["eula"],
+    "images": "quay.io\/pterodactyl\/core:java-11",
+    "file_denylist": "",
+    "startup": "java -Xms128M -Xmx{{SERVER_MEMORY}}M -Dterminal.jline=false -Dterminal.ansi=true -jar {{SERVER_JARFILE}}",
+    "config": {
+        "files": "{\r\n    \"server.properties\": {\r\n        \"parser\": \"properties\",\r\n        \"find\": {\r\n            \"server-ip\": \"0.0.0.0\",\r\n            \"server-port\": \"{{server.build.default.port}}\"\r\n        }\r\n    }\r\n}",
+        "startup": "{\r\n    \"done\": \")! For help, type \",\r\n    \"userInteraction\": [\r\n        \"Go to eula.txt for more info.\"\r\n    ]\r\n}",
+        "logs": "{}",
+        "stop": "stop"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!\/bin\/bash\r\n# Yatopia installation script\r\n#\r\n# Server Files: \/mnt\/server\r\napt update\r\napt install -y curl jq wget\r\necho -e \"Downloading Yatopia\"\r\ncd \/mnt\/server\r\nwget https:\/\/api.yatopiamc.org\/v2\/stableBuild\/download?branch=ver\/1.16.5 -O server.jar\r\nif [ ! -f server.properties ]; then\r\necho -e \"Downloading MC server.properties\"\r\ncurl -o server.properties https:\/\/raw.githubusercontent.com\/parkervcp\/eggs\/master\/minecraft\/java\/server.properties\r\nfi",
+            "container": "debian:buster-slim",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": [
+	 {
+            "name": "Server Jar File",
+            "description": "The name of the server jarfile to run the server with.",
+            "env_variable": "SERVER_JARFILE",
+            "default_value": "server.jar",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:20"
+        }
+	]
+}
